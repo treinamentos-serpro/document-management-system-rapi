@@ -40,3 +40,27 @@ como registro detalhado de cada alteracao de codigo.
 - Nenhum arquivo de aplicacao foi alterado nesta etapa.
 - A proxima etapa de implementacao so deve comecar apos o handoff para o modo
   Agent, seguindo o roteiro do treinamento.
+
+## 2026-10-06 - Implementacao da interface frontend
+
+### Contexto consultado
+
+- Contratos de upload, listagem e download em `docs/specs/dms-spec.md`.
+- Rotas e respostas HTTP implementadas no backend.
+- Proxy `/api` existente em `frontend/vite.config.js`.
+
+### Evolucao registrada
+
+- Criado cliente de API em `frontend/src/services/api.js`, usando `fetch`, o
+  prefixo `/api` e o cabecalho `X-User-Id`.
+- Criados `UploadComponent`, `DocumentList` e `DownloadButton` com componentes
+  funcionais, estados de carregamento e apresentacao dos documentos.
+- Atualizado `App.jsx` para integrar upload, listagem por usuario, download e
+  exibicao de erros.
+- Adicionada folha de estilos responsiva para a interface.
+
+### Estado ao concluir esta etapa
+
+- A interface consome os contratos existentes do backend e atualiza a lista
+  apos um upload bem-sucedido.
+- Validacao de build executada com `npm run build` em `frontend`.
