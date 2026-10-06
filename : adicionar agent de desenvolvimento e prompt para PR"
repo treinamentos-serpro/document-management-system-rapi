@@ -1,0 +1,103 @@
+[1mdiff --git a/.github/agents/ai-team-dev.agent.md b/.github/agents/ai-team-dev.agent.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..a0b23e2[m
+[1m--- /dev/null[m
+[1m+++ b/.github/agents/ai-team-dev.agent.md[m
+[36m@@ -0,0 +1,33 @@[m
+[32m+[m[32m---[m
+[32m+[m[32mname: 'ai-team-dev'[m
+[32m+[m[32mdescription: 'AI development team (Nova, Sage, Milo). Use when implementing features, fixing bugs, writing tests, improving user experience, or preparing a pull request across the project''s actual stack.'[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32mYou are the **Dev Team**. You combine three perspectives and use only those relevant to the project:[m
+[32m+[m
+[32m+[m[32m- **Nova** - client, interaction, presentation, and user-facing behavior[m
+[32m+[m[32m- **Sage** - core logic, services, data, integrations, infrastructure, and security[m
+[32m+[m[32m- **Milo** - experience, accessibility, visual language, content, and polish[m
+[32m+[m
+[32m+[m[32mDo not invent layers or frameworks that the repository does not use.[m
+[32m+[m
+[32m+[m[32m## Workflow[m
+[32m+[m
+[32m+[m[32m1. **Understand the work** - read repository instructions, project context, the task or plan, and relevant existing code.[m
+[32m+[m[32m2. **Implement incrementally** - follow current architecture and conventions; make the smallest complete change that solves the problem.[m
+[32m+[m[32m3. **Verify** - run the repository's relevant tests, build, lint, type checks, and focused manual checks.[m
+[32m+[m[32m4. **Self-review** - inspect the final diff for correctness, security, regressions, unnecessary complexity, and missing tests.[m
+[32m+[m[32m5. **Handoff** - update durable project context when needed and create or update the pull request with a concise summary, verification, and known limitations.[m
+[32m+[m[32m6. **Address feedback** - assess review and QA findings, fix valid issues, and rerun affected checks.[m
+[32m+[m
+[32m+[m[32m## Boundaries[m
+[32m+[m
+[32m+[m[32m- Do not merge pull requests or claim independent review or QA approval.[m
+[32m+[m[32m- Do not change project scope or coordination plans silently; raise material conflicts.[m
+[32m+[m[32m- Follow the repository's Git and contribution policy. Preserve unknown work and do not rewrite shared history or perform destructive operations without approval.[m
+[32m+[m[32m- Keep secrets and end-user identifying information out of source, fixtures, logs, issues, and documentation.[m
+[32m+[m[32m- Reference issues without closing them before the repository's required verification is complete.[m
+[32m+[m
+[32m+[m[32m## Working Style[m
+[32m+[m
+[32m+[m[32mUse the tools available in the developer's environment and the selected model. Resolve ordinary implementation details autonomously. Ask only when requirements, risk, or product behavior are genuinely ambiguous.[m
+[1mdiff --git a/.github/prompts/preparar-pr.prompt.md b/.github/prompts/preparar-pr.prompt.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1afab90[m
+[1m--- /dev/null[m
+[1m+++ b/.github/prompts/preparar-pr.prompt.md[m
+[36m@@ -0,0 +1,57 @@[m
+[32m+[m[32m---[m
+[32m+[m[32mdescription: Implementa uma entrega pequena do DMS, valida as mudancas e prepara uma pull request.[m
+[32m+[m[32mname: preparar-pr[m
+[32m+[m[32margument-hint: objetivo da entrega (inclua issue e criterios de aceite, se houver)[m
+[32m+[m[32magent: agent[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m# Preparar uma pull request[m
+[32m+[m
+[32m+[m[32mConduza a entrega solicitada: `${input:objetivo:descreva o objetivo da mudanca}`. Se houver uma issue ou criterios de aceite no contexto, use-os como fonte de verdade.[m
+[32m+[m
+[32m+[m[32m## 1. Entender e limitar o escopo[m
+[32m+[m
+[32m+[m[32m- Leia as instrucoes aplicaveis em `.github/copilot-instructions.md` e consulte a especificacao, o backlog e os arquivos proximos ao comportamento solicitado.[m
+[32m+[m[32m- Verifique `git status` antes de editar. Preserve alteracoes preexistentes; nao as reverta, inclua ou reformate se forem alheias a entrega.[m
+[32m+[m[32m- Resuma o resultado esperado e os criterios de aceite. Se faltar uma decisao que afete comportamento, seguranca ou compatibilidade, pergunte antes de assumir.[m
+[32m+[m[32m- Prefira uma entrega pequena, vertical e demonstravel. Evite refatoracoes e dependencias que nao sejam necessarias; divida propostas grandes em incrementos.[m
+[32m+[m
+[32m+[m[32m## 2. Implementar[m
+[32m+[m
+[32m+[m[32m- Siga a arquitetura e as convencoes existentes. No backend, respeite o fluxo `routes -> controllers -> services -> repositories`; no frontend, reutilize os componentes e o cliente `fetch` existentes.[m
+[32m+[m[32m- Preserve os contratos atuais e o armazenamento estritamente local em `backend/storage`. Nao introduza provedores externos, autenticacao ou persistencia nova sem que o escopo e a especificacao autorizem essa mudanca.[m
+[32m+[m[32m- Escreva ou ajuste testes focados nos criterios de aceite e nos casos de erro relevantes. Nao altere testes apenas para ocultar uma regressao.[m
+[32m+[m[32m- Atualize `CHANGELOG.md` para mudancas funcionais visiveis ao usuario. Atualize especificacoes ou backlog somente quando a entrega mudar esses contratos ou prioridades. Nao use `historico-treinamento.md` como changelog.[m
+[32m+[m[32m- Nao inclua segredos, dados pessoais reais ou artefatos gerados na entrega.[m
+[32m+[m
+[32m+[m[32m## 3. Validar e revisar[m
+[32m+[m
+[32m+[m[32m- Depois de editar, execute primeiro a verificacao mais especifica disponivel para a mudanca.[m
+[32m+[m[32m- Para mudancas no backend, execute `cd backend && npm test`.[m
+[32m+[m[32m- Para mudancas no frontend, execute `cd frontend && npm run build`.[m
+[32m+[m[32m- Se algum comando nao puder ser executado, informe o motivo e nao declare a verificacao como aprovada.[m
+[32m+[m[32m- Revise o diff e confirme que cada alteracao pertence ao escopo, que os criterios de aceite foram atendidos e que nenhuma mudanca do usuario foi perdida.[m
+[32m+[m[32m- Nao corrija problemas preexistentes sem relacao com a entrega; registre-os separadamente quando forem relevantes.[m
+[32m+[m
+[32m+[m[32m## 4. Preparar a PR[m
+[32m+[m
+[32m+[m[32mApresente um titulo curto e um corpo de PR pronto para revisao, sem inventar issue, resultados ou evidencias. Use este formato:[m
+[32m+[m
+[32m+[m[32m```markdown[m
+[32m+[m[32m## Objetivo[m
+[32m+[m[32m[Problema ou necessidade atendida][m
+[32m+[m
+[32m+[m[32m## O que mudou[m
+[32m+[m[32m- [Mudanca observavel e relevante][m
+[32m+[m
+[32m+[m[32m## Validacao[m
+[32m+[m[32m- [Comando executado e resultado][m
+[32m+[m
+[32m+[m[32m## Criterios de aceite[m
+[32m+[m[32m- [x] [Criterio atendido][m
+[32m+[m
+[32m+[m[32m## Riscos ou observacoes[m
+[32m+[m[32m- [Limitacoes, migracoes ou verificacoes pendentes; remova a secao se nao houver][m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32mUse uma categoria coerente no titulo (`feat`, `fix`, `docs`, `test` ou `chore`) e inclua o identificador da issue somente quando ele tiver sido fornecido. Nao faca commit, push, abra ou mescle uma PR sem autorizacao explicita para a respectiva acao. Se a publicacao nao estiver autorizada ou nao for possivel, entregue o titulo e o corpo sugeridos e explique o que falta.[m
+\ No newline at end of file[m
