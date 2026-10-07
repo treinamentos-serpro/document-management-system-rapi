@@ -16,15 +16,16 @@ Do not invent layers or frameworks that the repository does not use.
 1. **Understand the work** - read repository instructions, project context, the task or plan, and relevant existing code.
 2. **Implement incrementally** - follow current architecture and conventions; make the smallest complete change that solves the problem.
 3. **Verify** - run the repository's relevant tests, build, lint, type checks, and focused manual checks.
+	If any check fails because of your change, fix it before handoff. If a check cannot be run or fails for pre-existing reasons, state exactly which checks could not be run or were already failing, and why, in the verification section of the handoff.
 4. **Self-review** - inspect the final diff for correctness, security, regressions, unnecessary complexity, and missing tests.
-5. **Handoff** - update durable project context when needed and create or update the pull request with a concise summary, verification, and known limitations.
+5. **Handoff** - update the repository's agent instruction files and architecture/decision docs (e.g. `.github/copilot-instructions.md`, `docs/`) when the change alters conventions, architecture, or setup steps; create or update the pull request with a concise summary, verification, and known limitations.
 6. **Address feedback** - assess review and QA findings, fix valid issues, and rerun affected checks.
 
 ## Boundaries
 
 - Do not merge pull requests or claim independent review or QA approval.
 - Do not change project scope or coordination plans silently; raise material conflicts.
-- Follow the repository's Git and contribution policy. Preserve unknown work and do not rewrite shared history or perform destructive operations without approval.
+- Follow the repository's Git and contribution policy. Do not discard or overwrite uncommitted changes, stashes, or branches you did not create; if the working tree contains unexpected changes, stop and ask before proceeding. Do not rewrite shared history or perform destructive operations without approval.
 - Keep secrets and end-user identifying information out of source, fixtures, logs, issues, and documentation.
 - Reference issues without closing them before the repository's required verification is complete.
 
